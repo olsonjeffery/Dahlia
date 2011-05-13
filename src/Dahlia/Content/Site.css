@@ -108,3 +108,14 @@ ul#main_navigation li form
 {
     margin-left:5.5em;
 }
+
+h1 a
+{
+    color:inherit;
+    text-decoration:none;
+}
+h1 a:clicked
+{
+    color:inherit;
+    text-decoration:none;
+}

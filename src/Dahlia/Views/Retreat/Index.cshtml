@@ -28,38 +28,40 @@
     </ul>
     @foreach (var retreat in Model.Retreats)
     {
-        <div id="@retreat.Id">
-            <h2>@retreat.Description</h2>
-            <a href='@retreat.AddParticipantLink'>Add Participant</a>
-            @Html.ActionLink("Remove Retreat", "Delete", new { id = retreat.Id})
-            <a target="_blank" href="/retreat/generatereportfor?retreat=@retreat.Id">Report</a>
-            <br />
-            
-            <b>Registered</b>
-            <ul>
-                @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
-                {
-                    <li>
-                        <div><b>Name:</b> @participant.FirstName @participant.LastName @(Html.ActionLink<ParticipantController>(c => c.Edit(participant.Id), "Edit")) <a href="@participant.DeleteLink">Remove</a></div>
-                        <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
-                        <div><b>Bed Code:</b> @participant.BedCode</div>
-                        <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
-                        <div><b>Notes:</b> @participant.Notes</div>
-                    </li>
-                }
-            </ul><br />
-            <b>Waitlist</b>
-            <ul>
-                @foreach (var participant in retreat.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
-                {
-                    <li>
-                        <div><b>Name:</b> @participant.FirstName @participant.LastName <a href="@participant.DeleteLink">Delete</a></div>
-                        <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
-                        <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
-                        <div><b>Notes:</b> @participant.Notes</div>
-                    </li>
-                }
-            </ul>
+        <div id="retreat_container">
+            <div id="@retreat.Id" class="retreat_container">
+                <h2>@retreat.Description</h2>
+                <a href='@retreat.AddParticipantLink' class="button small black">Add Participant</a>
+                @Html.ActionLink("Remove", "Delete", new { id = retreat.Id }, new { @class = "button small black" })
+                <a target="_blank" class="button small black" href="/retreat/generatereportfor?retreat=@retreat.Id">Report</a>
+                <br />
+                
+                <b>Registered</b>
+                <ul>
+                    @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
+                    {
+                        <li>
+                            <div><b>Name:</b> @participant.FirstName @participant.LastName @(Html.ActionLink<ParticipantController>(c => c.Edit(participant.Id), "Edit", new { @class="button small black" })) <a href="@participant.DeleteLink" class="button small black">Remove</a></div>
+                            <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
+                            <div><b>Bed Code:</b> @participant.BedCode</div>
+                            <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
+                            <div><b>Notes:</b> @participant.Notes</div>
+                        </li>
+                    }
+                </ul><br />
+                <b>Waitlist</b>
+                <ul>
+                    @foreach (var participant in retreat.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
+                    {
+                        <li>
+                            <div><b>Name:</b> @participant.FirstName @participant.LastName <a href="@participant.DeleteLink">Delete</a></div>
+                            <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
+                            <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
+                            <div><b>Notes:</b> @participant.Notes</div>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     }
 </div>
